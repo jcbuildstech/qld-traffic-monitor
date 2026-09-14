@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: traffic
+      POSTGRES_USER: traffic_app
+      POSTGRES_PASSWORD: local_dev_only
+    ports:
+      - "5432:5432"
+    volumes:
+      - traffic_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  traffic_postgres_data:

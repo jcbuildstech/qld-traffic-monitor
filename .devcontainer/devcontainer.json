@@ -1,0 +1,27 @@
+{
+    "name": "Python Golden Path",
+
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".."
+    },
+"features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+},
+    "containerEnv": {
+        "UV_PROJECT_ENVIRONMENT": "/home/vscode/.venv"
+    },
+
+    "postCreateCommand": "if [ ! -d .git ]; then git init -b main; fi && git config --global --add safe.directory \"$(pwd)\" && git config user.name \"Juan Delgado Vivas\" && git config user.email \"jcbuildstech@gmail.com\" && if [ ! -f pyproject.toml ]; then uv init --bare --no-workspace; fi && uv sync",
+
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance"
+            ]
+        }
+    },
+
+    "remoteUser": "vscode"
+}
