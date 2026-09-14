@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Queensland Traffic Crash Monitor</title>
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #1f2933;
+        }
+
+        header {
+            padding: 20px 30px;
+            background: white;
+            border-bottom: 1px solid #ddd;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        header p {
+            margin: 6px 0 0;
+            color: #666;
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 20px;
+            padding: 20px;
+            height: calc(100vh - 120px);
+            box-sizing: border-box;
+        }
+
+        #map {
+            height: 100%;
+            min-height: 500px;
+            border-radius: 10px;
+        }
+
+        .right {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .card h2 {
+            margin-top: 0;
+        }
+
+        .metric {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .label {
+            color: #666;
+            margin-bottom: 16px;
+        }
+
+        .details p {
+            margin: 8px 0;
+        }
+
+        .nerd-button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 14px;
+            border: 1px solid #333;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Queensland Traffic Crash Monitor</h1>
+    <p>Live monitoring of Queensland traffic crash data</p>
+</header>
+
+<main>
+
+    <div id="map"></div>
+
+    <div class="right">
+
+        <section class="card details">
+            <h2>Latest Crash</h2>
+
+            <p><strong>Road:</strong> {{ crash.road_name }}</p>
+            <p><strong>Locality:</strong> {{ crash.locality }}</p>
+            <p><strong>Priority:</strong> {{ crash.priority }}</p>
+            <p><strong>Status:</strong> {{ crash.status }}</p>
+            <p><strong>Description:</strong> {{ crash.description }}</p>
+            <p><strong>First seen:</strong> {{ crash.first_seen_at }}</p>
+        </section>
+
+        <section class="card">
+            <h2>Quick Analytics</h2>
+
+            <div class="metric">{{ crashes_24h }}</div>
+            <div class="label">Crashes detected in the last 24 hours</div>
+
+            <div class="metric">{{ average_minutes }}</div>
+            <div class="label">Average minutes between crashes</div>
+
+            <div class="metric">{{ total_crashes }}</div>
+            <div class="label">Crashes observed since monitoring began</div>
+
+            <a class="nerd-button" href="/stats">Stats for nerds</a>
+        </section>
+
+    </div>
+
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+    const latitude = {{ latitude }};
+    const longitude = {{ longitude }};
+
+    const map = L.map("map").setView([latitude, longitude], 12);
+
+    L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+            maxZoom: 19,
+            attribution: "&copy; OpenStreetMap contributors"
+        }
+    ).addTo(map);
+
+    L.marker([latitude, longitude])
+        .addTo(map)
+        .bindPopup(
+            "<strong>{{ crash.road_name }}</strong><br>{{ crash.locality }}"
+        )
+        .openPopup();
+</script>
+
+</body>
+</html>
