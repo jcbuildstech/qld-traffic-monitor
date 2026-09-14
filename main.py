@@ -1,9 +1,27 @@
+from datetime import datetime, timezone
+
 from flask import Flask, render_template
 
 from storage.postgres_storage import connect_database
 
 
 app = Flask(__name__)
+
+
+def format_age(seconds):
+    if seconds is None:
+        return "No data yet"
+
+    if seconds < 60:
+        return f"{seconds} seconds ago"
+
+    minutes = seconds // 60
+
+    if minutes < 60:
+        return f"{minutes} minute{'s' if minutes != 1 else ''} ago"
+
+    hours = minutes // 60
+    return f"{hours} hour{'s' if hours != 1 else ''} ago"
 
 
 @app.get("/")
@@ -46,53 +64,24 @@ def dashboard():
             if crash is None:
                 return "No crash events have been recorded yet.", 404
 
-            # Total crashes since monitoring began
+            # Latest successful worker ingest.
+            # The worker updates last_seen_at every polling cycle.
+            cursor.execute(
+                """
+                SELECT MAX(last_seen_at) AS last_ingest
+                FROM events
+                """
+            )
+            last_ingest = cursor.fetchone()["last_ingest"]
+
+            # Number of historical observations stored.
             cursor.execute(
                 """
                 SELECT COUNT(*) AS total
-                FROM events
-                WHERE event_type = 'crash'
+                FROM observations
                 """
             )
-            total_crashes = cursor.fetchone()["total"]
-
-            # Crashes detected during the last 24 hours
-            cursor.execute(
-                """
-                SELECT COUNT(*) AS total
-                FROM events
-                WHERE event_type = 'crash'
-                  AND first_seen_at >= NOW() - INTERVAL '24 hours'
-                """
-            )
-            crashes_24h = cursor.fetchone()["total"]
-
-            # Average time between crash detections
-            cursor.execute(
-                """
-                WITH crash_times AS (
-                    SELECT
-                        first_seen_at,
-                        LAG(first_seen_at) OVER (
-                            ORDER BY first_seen_at
-                        ) AS previous_seen_at
-                    FROM events
-                    WHERE event_type = 'crash'
-                )
-                SELECT
-                    AVG(
-                        EXTRACT(
-                            EPOCH FROM (
-                                first_seen_at - previous_seen_at
-                            )
-                        ) / 60
-                    ) AS average_minutes
-                FROM crash_times
-                WHERE previous_seen_at IS NOT NULL
-                """
-            )
-
-            average = cursor.fetchone()["average_minutes"]
+            observations_stored = cursor.fetchone()["total"]
 
     finally:
         connection.close()
@@ -103,20 +92,36 @@ def dashboard():
     longitude = coordinates[0]
     latitude = coordinates[1]
 
-    average_minutes = (
-        round(float(average), 1)
-        if average is not None
-        else "N/A"
-    )
+    now = datetime.now(timezone.utc)
+
+    if last_ingest is None:
+        seconds_since_ingest = None
+        pipeline_status = "NO DATA"
+        status_class = "stale"
+    else:
+        seconds_since_ingest = max(
+            0,
+            int((now - last_ingest).total_seconds())
+        )
+
+        if seconds_since_ingest < 120:
+            pipeline_status = "LIVE"
+            status_class = "live"
+        else:
+            pipeline_status = "STALE"
+            status_class = "stale"
+
+    last_ingest_text = format_age(seconds_since_ingest)
 
     return render_template(
         "index.html",
         crash=crash,
         latitude=latitude,
         longitude=longitude,
-        crashes_24h=crashes_24h,
-        average_minutes=average_minutes,
-        total_crashes=total_crashes,
+        pipeline_status=pipeline_status,
+        status_class=status_class,
+        last_ingest_text=last_ingest_text,
+        observations_stored=observations_stored,
     )
 
 

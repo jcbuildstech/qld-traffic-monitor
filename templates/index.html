@@ -66,29 +66,85 @@
             margin-top: 0;
         }
 
-        .metric {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 4px;
-        }
-
-        .label {
-            color: #666;
-            margin-bottom: 16px;
-        }
-
         .details p {
             margin: 8px 0;
         }
 
+        .status-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .status-dot.live {
+            background: #16a34a;
+        }
+
+        .status-dot.stale {
+            background: #dc2626;
+        }
+
+        .status-text {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .status-description {
+            color: #555;
+            margin: 0 0 20px;
+        }
+
+        .system-row {
+            margin: 14px 0;
+        }
+
+        .system-label {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+
+        .system-value {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .pipeline {
+            margin-top: 20px;
+            padding: 12px;
+            background: #f4f6f8;
+            border-radius: 6px;
+            font-family: monospace;
+            text-align: center;
+        }
+
         .nerd-button {
             display: inline-block;
-            margin-top: 10px;
+            margin-top: 18px;
             padding: 10px 14px;
             border: 1px solid #333;
             border-radius: 6px;
             text-decoration: none;
             color: #333;
+        }
+
+        @media (max-width: 900px) {
+            main {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            #map {
+                height: 500px;
+            }
         }
     </style>
 </head>
@@ -118,18 +174,39 @@
         </section>
 
         <section class="card">
-            <h2>Quick Analytics</h2>
+            <h2>System Status</h2>
 
-            <div class="metric">{{ crashes_24h }}</div>
-            <div class="label">Crashes detected in the last 24 hours</div>
+            <div class="status-row">
+                <span class="status-dot {{ status_class }}"></span>
+                <span class="status-text">{{ pipeline_status }}</span>
+            </div>
 
-            <div class="metric">{{ average_minutes }}</div>
-            <div class="label">Average minutes between crashes</div>
+            <p class="status-description">
+                QLDTraffic monitoring pipeline
+            </p>
 
-            <div class="metric">{{ total_crashes }}</div>
-            <div class="label">Crashes observed since monitoring began</div>
+            <div class="system-row">
+                <div class="system-label">Last successful ingest</div>
+                <div class="system-value">{{ last_ingest_text }}</div>
+            </div>
 
-            <a class="nerd-button" href="/stats">Stats for nerds</a>
+            <div class="system-row">
+                <div class="system-label">Observations stored</div>
+                <div class="system-value">{{ observations_stored }}</div>
+            </div>
+
+            <div class="pipeline">
+                QLDTraffic → Worker → PostgreSQL → Web
+            </div>
+
+            <a
+                class="nerd-button"
+                href="https://github.com/jcbuildstech/qld-traffic-monitor"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Stats for nerds →
+            </a>
         </section>
 
     </div>
