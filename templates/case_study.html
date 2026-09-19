@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Business analysis case study for the Queensland Traffic Monitor project by Juan Camilo Delgado Vivas.">
+    <title>Traffic Monitor — Business Analysis Case Study</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='case-study.css') }}">
+</head>
+<body>
+    <header class="site-header">
+        <div class="shell header-inner">
+            <a class="brand" href="{{ url_for('dashboard') }}" aria-label="Traffic Monitor home">
+                <span class="brand-mark" aria-hidden="true"></span>
+                <span>Traffic Monitor</span>
+            </a>
+            <nav class="header-links" aria-label="Project links">
+                <a href="{{ url_for('dashboard') }}">Live prototype</a>
+                <a href="https://github.com/jcbuildstech/qld-traffic-monitor" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero shell">
+            <div class="hero-copy">
+                <div class="eyebrow-row">
+                    <span class="eyebrow">Business analysis case study</span>
+                    <span class="status-pill">In progress</span>
+                </div>
+                <h1>Making Queensland traffic history useful for analysis.</h1>
+                <p class="hero-lead">A structured business analysis review of an existing prototype: formalising the need, challenging scope, tracing requirements to what already exists, and making the remaining validation work visible before further development.</p>
+                <blockquote>
+                    “Enable historical analysis of Queensland traffic events making key patterns quickly explorable in a web interface.”
+                </blockquote>
+                <div class="hero-actions">
+                    <a class="button button-primary" href="#case-study">Read the case study</a>
+                    <a class="button button-secondary" href="{{ url_for('dashboard') }}">View live prototype</a>
+                </div>
+            </div>
+
+            <aside class="status-card" aria-label="Current case study status">
+                <div class="status-card-kicker">Current state</div>
+                <div class="status-metric"><strong>8</strong><span>requirements documented</span></div>
+                <div class="status-metric"><strong>6</strong><span>mapped to existing delivery evidence</span></div>
+                <div class="status-metric"><strong>0</strong><span>formally verified or validated yet</span></div>
+                <p>The prototype is live. Requirements, traceability and delivery mapping are documented. Formal verification, UAT and outcome validation remain open.</p>
+            </aside>
+        </section>
+
+        <section class="progress-band" aria-label="Project progress">
+            <div class="shell progress-grid">
+                <div class="progress-step complete"><span>01</span><strong>Need & scope</strong><small>Documented</small></div>
+                <div class="progress-step complete"><span>02</span><strong>Current / future gap</strong><small>Documented</small></div>
+                <div class="progress-step complete"><span>03</span><strong>Requirements</strong><small>Drafted</small></div>
+                <div class="progress-step complete"><span>04</span><strong>Solution definition</strong><small>Documented</small></div>
+                <div class="progress-step active"><span>05</span><strong>Delivery mapping</strong><small>In progress</small></div>
+                <div class="progress-step"><span>06</span><strong>Verification & UAT</strong><small>Next</small></div>
+                <div class="progress-step"><span>07</span><strong>Outcome validation</strong><small>Next</small></div>
+            </div>
+        </section>
+
+        <div id="case-study" class="shell case-study-layout">
+            <aside class="toc" aria-label="Case study contents">
+                <div class="toc-label">Case study</div>
+                <a href="#change">01 — The change</a>
+                <a href="#context">02 — Context</a>
+                <a href="#gap">03 — Current state & gap</a>
+                <a href="#requirements">04 — Requirements</a>
+                <a href="#solution">05 — Solution definition</a>
+                <a href="#delivery">06 — From requirements to delivery</a>
+                <a href="#next">07 — Current status</a>
+            </aside>
+
+            <article class="case-content">
+                <section id="change" class="case-section">
+                    <div class="section-number">01</div>
+                    <div class="section-copy">
+                        <p class="section-kicker">The change</p>
+                        <h2>Start with the capability, not the technology.</h2>
+                        <p>The project is being assessed against one core change request: enable historical analysis of Queensland traffic events and make useful patterns quickly explorable in a web interface.</p>
+                        <p>The review deliberately separates the business need from implementation choices. A pipeline, database, web framework or deployment method may support the change, but none of those technologies are the requirement by themselves.</p>
+                        <div class="principle-callout">
+                            <strong>Review approach</strong>
+                            <p>The technical prototype already existed. This case study applies a structured BA review to formalise the need, test the scope, establish traceability and identify what still requires verification before further development.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="context" class="case-section">
+                    <div class="section-number">02</div>
+                    <div class="section-copy">
+                        <p class="section-kicker">Context</p>
+                        <h2>Who interacts with the solution, and where does the boundary sit?</h2>
+                        <p>The context model separates the source of traffic information from the people who analyse it, the people who consume selected results, and the components responsible for keeping the platform available.</p>
+                        <div class="artifact-card">
+                            <div class="artifact-heading">
+                                <div>
+                                    <span class="artifact-type">Artefact</span>
+                                    <h3>Context diagram</h3>
+                                </div>
+                                <a href="{{ url_for('static', filename='case-study/context-diagram.svg') }}" target="_blank" rel="noopener noreferrer">Open full size ↗</a>
+                            </div>
+                            <img src="{{ url_for('static', filename='case-study/context-diagram.png') }}" alt="Context diagram showing Queensland Traffic data source, public viewer, analyst or researcher, system administrator, website, database and the Historical Queensland Traffic Analysis Platform.">
+                        </div>
+                    </div>
+                </section>
+
+                <section id="gap" class="case-section">
+                    <div class="section-number">03</div>
+                    <div class="section-copy">
+                        <p class="section-kicker">Current state & gap</p>
+                        <h2>The problem is not access to live traffic information. It is retaining and analysing it over time.</h2>
+                        <p>The current-state review compares what is already available with the capability needed for historical analysis. The important gaps are persistent collection and storage, programmatic analysis, and a clear way to expose selected results.</p>
+                        <div class="artifact-card">
+                            <div class="artifact-heading">
+                                <div>
+                                    <span class="artifact-type">Artefact</span>
+                                    <h3>Current state, future state and gap analysis</h3>
+                                </div>
+                                <a href="{{ url_for('static', filename='case-study/current-state-analysis.svg') }}" target="_blank" rel="noopener noreferrer">Open full size ↗</a>
+                            </div>
+                            <img src="{{ url_for('static', filename='case-study/current-state-analysis.png') }}" alt="Three-column analysis comparing current state, future state and identified gaps for historical Queensland traffic analysis.">
+                        </div>
+                        <div class="scope-note">
+                            <span>Scope discipline</span>
+                            <p>The existing prototype includes notifications. During requirements refinement that capability is being reassessed because it does not directly support the current core change request. It is not being used to justify the primary business outcome simply because it already exists.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="requirements" class="case-section">
+                    <div class="section-number">04</div>
+                    <div class="section-copy">
+                        <p class="section-kicker">Requirements</p>
+                        <h2>Eight requirements currently define the working scope.</h2>
+                        <p>The matrix is still a working artefact: all verification and validation fields remain open. The summary below keeps the case study readable while the full traceability matrix is available as supporting evidence.</p>
+
+                        <div class="requirements-grid">
+                            <details class="requirement" open>
+                                <summary><span>R-001</span><strong>Historical retention</strong></summary>
+                                <p><b>Use case:</b> The Data Analyst can access traffic events from the previous 30 days after they are no longer available from the live source.</p>
+                                <p><b>Acceptance:</b> Unique events remain queryable across a continuous 30-day period after disappearing from the source.</p>
+                            </details>
+                            <details class="requirement">
+                                <summary><span>R-002</span><strong>Automated collection</strong></summary>
+                                <p><b>Use case:</b> The system collects traffic-event information without manual intervention.</p>
+                                <p><b>Acceptance:</b> New traffic-event observations are collected automatically at the agreed interval throughout the collection period.</p>
+                            </details>
+                            <details class="requirement">
+                                <summary><span>R-003</span><strong>Event identity vs observations</strong></summary>
+                                <p><b>Use case:</b> The Data Analyst can count and compare events without repeated observations being counted as separate incidents.</p>
+                                <p><b>Acceptance:</b> Repeated observations with the same source event identifier remain associated with one event while state changes can still be retained.</p>
+                            </details>
+                            <details class="requirement">
+                                <summary><span>R-004</span><strong>Queryable historical analysis</strong></summary>
+                                <p><b>Use case:</b> The Data Analyst can analyse traffic events by time, suburb or location, and event type.</p>
+                                <p><b>Acceptance:</b> Stored data can be filtered or grouped across those dimensions and return consistent counts.</p>
+                            </details>
+                            <details class="requirement">
+                                <summary><span>R-005</span><strong>Public metrics</strong></summary>
+                                <p><b>Use case:</b> A public viewer can quickly understand selected traffic patterns through the website.</p>
+                                <p><b>Acceptance:</b> Selected metrics are presented in plain language without requiring access to the underlying dataset.</p>
+                            </details>
+                            <details class="requirement">
+                                <summary><span>R-006</span><strong>Time since last crash</strong></summary>
+                                <p><b>Use case:</b> A public viewer can see how long it has been since the most recent selected traffic event.</p>
+                                <p><b>Acceptance:</b> Elapsed time is calculated from the latest qualifying stored event and presented in a human-readable form.</p>
+                            </details>
+                            <details class="requirement">
+                                <summary><span>R-007</span><strong>Analysis-ready data</strong></summary>
+                                <p><b>Use case:</b> The Data Analyst can obtain retained data in a structure suitable for further analysis.</p>
+                                <p><b>Acceptance:</b> Historical records can be retrieved as consistent tabular data without manual restructuring.</p>
+                            </details>
+                            <details class="requirement">
+                                <summary><span>R-008</span><strong>Collection completeness</strong></summary>
+                                <p><b>Use case:</b> The analyst can determine when historical data may be incomplete because collection failed.</p>
+                                <p><b>Acceptance:</b> Failed collection periods are identifiable and cannot silently appear as valid zero-event periods.</p>
+                            </details>
+                        </div>
+
+                        <div class="artifact-download">
+                            <div>
+                                <strong>Full working artefact</strong>
+                                <span>Requirements Traceability Matrix · XLSX</span>
+                            </div>
+                            <a class="button button-secondary" href="{{ url_for('static', filename='case-study/downloads/requirements-traceability-matrix.xlsx') }}" download>Download matrix</a>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="solution" class="case-section">
+                    <div class="section-number">05</div>
+                    <div class="section-copy">
+                        <p class="section-kicker">Solution definition</p>
+                        <h2>A deliberately simple view of what must exist to deliver the capability.</h2>
+                        <p>The high-level solution remains technology-agnostic: obtain traffic events, retain them, process them for analysis, and make the result available to the analyst and public viewer.</p>
+                        <div class="artifact-card artifact-narrow">
+                            <div class="artifact-heading">
+                                <div>
+                                    <span class="artifact-type">Artefact</span>
+                                    <h3>High-level solution definition</h3>
+                                </div>
+                                <a href="{{ url_for('static', filename='case-study/solution-definition.svg') }}" target="_blank" rel="noopener noreferrer">Open full size ↗</a>
+                            </div>
+                            <img src="{{ url_for('static', filename='case-study/solution-definition.png') }}" alt="High-level solution flow from QLD Traffic API through collection, historical storage and analysis to analyst access and a public website.">
+                        </div>
+                    </div>
+                </section>
+
+                <section id="delivery" class="case-section">
+                    <div class="section-number">06</div>
+                    <div class="section-copy">
+                        <p class="section-kicker">From requirements to delivery</p>
+                        <h2>Trace the requirement to an existing capability, then prove it.</h2>
+                        <p>This is retrospective traceability, not a claim that every requirement existed before the first line of code. The purpose is to identify what the existing prototype already supports, what evidence exists, and what still has to be tested.</p>
+
+                        <div class="delivery-table-wrap" role="region" aria-label="Implementation and delivery mapping" tabindex="0">
+                            <table class="delivery-table">
+                                <thead>
+                                    <tr>
+                                        <th>Requirement</th>
+                                        <th>What exists</th>
+                                        <th>Implementation decision</th>
+                                        <th>Evidence</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><span class="req-id">R-001</span></td><td>Historical traffic-event storage</td><td>Persist events after they disappear from the live source</td><td>Database / sample historical records</td></tr>
+                                    <tr><td><span class="req-id">R-002</span></td><td>Automated data collection</td><td>Scheduled collection from QLD Traffic source</td><td>Repository / running deployment</td></tr>
+                                    <tr><td><span class="req-id">R-003</span></td><td>Event vs observation handling</td><td>Use source event identifiers to prevent repeated observations being counted as new events</td><td>Database records / query result</td></tr>
+                                    <tr><td><span class="req-id">R-005</span></td><td>Public analytical interface</td><td>Expose selected metrics through the website</td><td><a href="{{ url_for('dashboard') }}">Live prototype</a></td></tr>
+                                    <tr><td><span class="req-id">R-007</span></td><td>Analysis-ready data</td><td>Store records in structured fields suitable for querying and dataframes</td><td>Database / query example</td></tr>
+                                    <tr><td><span class="req-id">R-008</span></td><td>Collection completeness</td><td>Record collection status and failures</td><td>Logs / monitoring evidence</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="coverage-callout">
+                            <div><strong>6 / 8</strong><span>requirements currently have an implementation mapping</span></div>
+                            <p><b>R-004</b> and <b>R-006</b> remain open in the delivery log. Mapping an existing capability is not the same as verification: the RTM still records every requirement as unverified and unvalidated.</p>
+                        </div>
+
+                        <div class="artifact-download">
+                            <div>
+                                <strong>Full working artefact</strong>
+                                <span>Implementation & Delivery Log · XLSX</span>
+                            </div>
+                            <a class="button button-secondary" href="{{ url_for('static', filename='case-study/downloads/implementation-delivery-log.xlsx') }}" download>Download log</a>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="next" class="case-section case-section-last">
+                    <div class="section-number">07</div>
+                    <div class="section-copy">
+                        <p class="section-kicker">Current status</p>
+                        <h2>The analysis is public before the case study is finished.</h2>
+                        <p>The next stage is not another feature sprint. It is verification: execute the defined test cases, capture actual outcomes, resolve failures, then complete UAT and assess whether the original change request has actually been satisfied.</p>
+
+                        <div class="next-grid">
+                            <div class="next-card complete"><span>Completed / documented</span><strong>Need, scope, context, gap analysis, requirements and solution definition</strong></div>
+                            <div class="next-card active"><span>In progress</span><strong>Mapping the existing implementation back to the working requirements</strong></div>
+                            <div class="next-card"><span>Next</span><strong>Verification, actual test outcomes, UAT and final outcome validation</strong></div>
+                        </div>
+
+                        <p class="closing-note">This page will evolve as those stages are completed. The aim is to make the reasoning, evidence and unresolved work visible rather than present an unfinished project as a finished one.</p>
+                    </div>
+                </section>
+            </article>
+        </div>
+    </main>
+
+    <footer>
+        <div class="shell footer-inner">
+            <span>Juan Camilo Delgado Vivas · Traffic Monitor</span>
+            <div>
+                <a href="{{ url_for('dashboard') }}">Live prototype</a>
+                <a href="https://github.com/jcbuildstech/qld-traffic-monitor" target="_blank" rel="noopener noreferrer">Repository</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

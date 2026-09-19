@@ -24,6 +24,11 @@ def format_age(seconds):
     return f"{hours} hour{'s' if hours != 1 else ''} ago"
 
 
+@app.get("/case-study")
+def case_study():
+    return render_template("case_study.html")
+
+
 @app.get("/")
 def dashboard():
     connection = connect_database()

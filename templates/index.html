@@ -23,6 +23,14 @@
             padding: 20px 30px;
             background: white;
             border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .header-copy {
+            min-width: 0;
         }
 
         header h1 {
@@ -32,6 +40,23 @@
         header p {
             margin: 6px 0 0;
             color: #666;
+        }
+
+        .case-study-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 18px;
+            background: #1f2933;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .case-study-cta:hover {
+            background: #111827;
         }
 
         main {
@@ -126,9 +151,16 @@
             text-align: center;
         }
 
+        .project-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 18px;
+        }
+
         .nerd-button {
             display: inline-block;
-            margin-top: 18px;
+            margin-top: 0;
             padding: 10px 14px;
             border: 1px solid #333;
             border-radius: 6px;
@@ -137,6 +169,16 @@
         }
 
         @media (max-width: 900px) {
+            header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .case-study-cta {
+                width: 100%;
+                box-sizing: border-box;
+            }
+
             main {
                 grid-template-columns: 1fr;
                 height: auto;
@@ -152,8 +194,14 @@
 <body>
 
 <header>
-    <h1>Queensland Traffic Crash Monitor</h1>
-    <p>Live monitoring of Queensland traffic crash data</p>
+    <div class="header-copy">
+        <h1>Queensland Traffic Crash Monitor</h1>
+        <p>Live monitoring of Queensland traffic crash data</p>
+    </div>
+
+    <a class="case-study-cta" href="{{ url_for('case_study') }}">
+        View Business Analysis Case Study →
+    </a>
 </header>
 
 <main>
@@ -199,14 +247,16 @@
                 QLDTraffic → Worker → PostgreSQL → Web
             </div>
 
-            <a
-                class="nerd-button"
-                href="https://github.com/jcbuildstech/qld-traffic-monitor"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                Stats for nerds →
-            </a>
+            <div class="project-links">
+                <a
+                    class="nerd-button"
+                    href="https://github.com/jcbuildstech/qld-traffic-monitor"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Stats for nerds →
+                </a>
+            </div>
         </section>
 
     </div>
