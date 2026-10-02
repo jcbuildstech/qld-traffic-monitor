@@ -55,6 +55,20 @@
             white-space: nowrap;
         }
 
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .report-cta {
+            background: #255fd5;
+        }
+
+        .case-study-cta.report-cta:hover {
+            background: #18469f;
+        }
+
         .case-study-cta:hover {
             background: #111827;
         }
@@ -199,9 +213,14 @@
         <p>Live monitoring of Queensland traffic crash data</p>
     </div>
 
+    <div class="header-actions">
+        <a class="case-study-cta report-cta" href="{{ url_for('report') }}">
+            Read the 29 Sep 2026 Report →
+        </a>
     <a class="case-study-cta" href="{{ url_for('case_study') }}">
         View Business Analysis Case Study →
     </a>
+    </div>
 </header>
 
 <main>
