@@ -6,3 +6,4 @@ __pycache__/
 
 new_project.bat
 data/
+analysis/*.html
