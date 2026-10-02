@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 from flask import Flask, render_template
 
@@ -6,6 +6,19 @@ from storage.postgres_storage import connect_database
 
 
 app = Flask(__name__)
+
+
+# Queensland has no daylight saving, so Brisbane time is always UTC+10.
+BRISBANE = timezone(timedelta(hours=10))
+
+
+def format_brisbane(moment):
+    if moment is None:
+        return "Unknown"
+
+    local = moment.astimezone(BRISBANE)
+    hour = local.strftime("%I").lstrip("0")
+    return local.strftime(f"%a %d %b %Y, {hour}:%M %p AEST")
 
 
 def format_age(seconds):
@@ -53,6 +66,7 @@ def dashboard():
                     o.priority,
                     o.status,
                     o.description,
+                    o.started_at,
                     o.geometry_json
                 FROM events e
                 JOIN observations o
@@ -122,6 +136,7 @@ def dashboard():
             status_class = "stale"
 
     last_ingest_text = format_age(seconds_since_ingest)
+    crash_started_text = format_brisbane(crash["started_at"])
 
     return render_template(
         "index.html",
@@ -131,6 +146,7 @@ def dashboard():
         pipeline_status=pipeline_status,
         status_class=status_class,
         last_ingest_text=last_ingest_text,
+        crash_started_text=crash_started_text,
         observations_stored=observations_stored,
     )
 
