@@ -137,6 +137,7 @@ def dashboard():
 
     last_ingest_text = format_age(seconds_since_ingest)
     crash_started_text = format_brisbane(crash["started_at"])
+    crash_age_text = format_age(max(0, int((now - crash["started_at"]).total_seconds()))) if crash["started_at"] else "Unknown"
 
     return render_template(
         "index.html",
@@ -147,6 +148,7 @@ def dashboard():
         status_class=status_class,
         last_ingest_text=last_ingest_text,
         crash_started_text=crash_started_text,
+        crash_age_text=crash_age_text,
         observations_stored=observations_stored,
     )
 
