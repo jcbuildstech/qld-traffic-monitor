@@ -29,6 +29,11 @@ def case_study():
     return render_template("case_study.html")
 
 
+@app.get("/report")
+def report():
+    return render_template("report.html")
+
+
 @app.get("/")
 def dashboard():
     connection = connect_database()

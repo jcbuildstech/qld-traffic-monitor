@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Business analysis case study for the Queensland Traffic Monitor project by Juan Camilo Delgado Vivas.">
+    <title>Traffic Monitor — 29 Sep 2026 Report</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='case-study.css') }}">
+</head>
+<body>
+    <header class="site-header">
+        <div class="shell header-inner">
+            <a class="brand" href="{{ url_for('dashboard') }}" aria-label="Traffic Monitor home">
+                <span class="brand-mark" aria-hidden="true"></span>
+                <span>Traffic Monitor</span>
+            </a>
+            <nav class="header-links" aria-label="Project links">
+                <a href="{{ url_for('dashboard') }}">Live prototype</a>
+                <a href="https://github.com/jcbuildstech/qld-traffic-monitor" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="shell">
+        <h1>29 September 2026 report</h1>
+    </main>
+
+    <footer>
+        <div class="shell footer-inner">
+            <span>Juan Camilo Delgado Vivas · Traffic Monitor</span>
+            <div>
+                <a href="{{ url_for('dashboard') }}">Live prototype</a>
+                <a href="https://github.com/jcbuildstech/qld-traffic-monitor" target="_blank" rel="noopener noreferrer">Repository</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
