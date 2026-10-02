@@ -21,8 +21,74 @@
         </div>
     </header>
 
-    <main class="shell">
-        <h1>29 September 2026 report</h1>
+    <main>
+        <section class="hero shell">
+            <div class="hero-copy">
+                <div class="eyebrow-row">
+                    <span class="eyebrow">Queensland · 14 September – 29 September 2026</span>
+                </div>
+                <h1>Historical crash analysis</h1>
+                <p class="hero-lead">457 crashes were recorded across Queensland in 15 days of continuous collection. They follow a clear daily rhythm, peaking in the mid-afternoon. They concentrate on the state's busiest roads, led by the Pacific Motorway. And they cluster together: a crash is followed by another within 2&nbsp;km and 2&nbsp;hours about twice as often as chance alone would produce.</p>
+            </div>
+        </section>
+
+        <div class="shell case-study-layout">
+            <aside class="toc" aria-label="Report contents">
+                <div class="toc-label">Report</div>
+                <a href="#when">01 — When</a>
+                <a href="#where">02 — Where</a>
+                <a href="#together">03 — Together</a>
+                <a href="#limitations">04 — Limitations</a>
+                <a href="#method">05 — Method</a>
+            </aside>
+
+            <article class="case-content">
+                <section id="when" class="case-section">
+                    <div class="section-number">01</div>
+                    <div class="section-copy">
+                        <p class="section-kicker">Finding 1 · When</p>
+                        <h2>Crashes peak in the mid-afternoon.</h2>
+                        <p>Crashes rise with the morning commute, reaching 30 an hour at 7am, and peak at 3pm and 4pm with 33 and 34 crashes. The quietest hour is 2am, with 3.</p>
+                    </div>
+                </section>
+
+                <section id="where" class="case-section">
+                    <div class="section-number">02</div>
+                    <div class="section-copy">
+                        <p class="section-kicker">Finding 2 · Where</p>
+                        <h2>Crashes concentrate on the busiest roads.</h2>
+                        <p>The Pacific Motorway (48), the Bruce Highway (42) and the Gateway Motorway (22) account for a quarter of all crashes. 329 of the 457 (72%) happened in South East Queensland.</p>
+                    </div>
+                </section>
+
+                <section id="together" class="case-section">
+                    <div class="section-number">03</div>
+                    <div class="section-copy">
+                        <p class="section-kicker">Finding 3 · Together</p>
+                        <h2>Crashes cluster in time and place.</h2>
+                        <p>24 pairs of crashes happened within 2&nbsp;km and 2&nbsp;hours of each other: 22 of 453 crashes, about 1 in 20, were followed by another nearby. Across 5,000 simulations that kept every crash location and the real daily rhythm, chance produced 11.6 pairs on average, and only 5 simulations reached 24.</p>
+                    </div>
+                </section>
+
+                <section id="limitations" class="case-section">
+                    <div class="section-number">04</div>
+                    <div class="section-copy">
+                        <p class="section-kicker">Limitations</p>
+                        <h2>What more data would add.</h2>
+                        <p>Traffic volumes would turn these counts into crash rates, showing which roads and hours carry the most risk per vehicle. A longer collection period would sharpen the crash-pair estimate, currently between 1.3 and 3.1 times chance, and help explain what links the pairs.</p>
+                    </div>
+                </section>
+
+                <section id="method" class="case-section case-section-last">
+                    <div class="section-number">05</div>
+                    <div class="section-copy">
+                        <p class="section-kicker">Method</p>
+                        <h2>How the data was collected and analysed.</h2>
+                        <p>A Python collector polls the QLDTraffic API every 60 seconds and stores every incident, and each change to it, in PostgreSQL on a cloud server. For this report, a snapshot of the database was exported and analysed in Python with pandas.</p>
+                    </div>
+                </section>
+            </article>
+        </div>
     </main>
 
     <footer>
