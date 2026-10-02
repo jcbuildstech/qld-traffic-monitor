@@ -8,3 +8,12 @@ dependencies = [
     "python-dotenv>=1.2.3",
     "requests>=2.34.2",
 ]
+
+[dependency-groups]
+dev = [
+    "folium>=0.20.0",
+    "ipykernel>=7.3.0",
+    "matplotlib>=3.11.2",
+    "nbconvert>=7.17.1",
+    "pandas>=3.0.6",
+]
