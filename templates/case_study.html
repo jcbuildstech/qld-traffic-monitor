@@ -229,16 +229,18 @@
                                     <tr><td><span class="req-id">R-001</span></td><td>Historical traffic-event storage</td><td>Persist events after they disappear from the live source</td><td>Database / sample historical records</td></tr>
                                     <tr><td><span class="req-id">R-002</span></td><td>Automated data collection</td><td>Scheduled collection from QLD Traffic source</td><td>Repository / running deployment</td></tr>
                                     <tr><td><span class="req-id">R-003</span></td><td>Event vs observation handling</td><td>Use source event identifiers to prevent repeated observations being counted as new events</td><td>Database records / query result</td></tr>
+                                    <tr><td><span class="req-id">R-004</span></td><td>Snapshot export and analysis notebook</td><td>Export the database to CSV, analyse it in Python and publish the results as a report</td><td><a href="{{ url_for('report') }}">29 Sep 2026 report</a></td></tr>
                                     <tr><td><span class="req-id">R-005</span></td><td>Public analytical interface</td><td>Expose selected metrics through the website</td><td><a href="{{ url_for('dashboard') }}">Live prototype</a></td></tr>
+                                    <tr><td><span class="req-id">R-006</span></td><td>Time since latest crash</td><td>Show the latest crash's start time in Brisbane time and the time elapsed since</td><td><a href="{{ url_for('dashboard') }}">Live prototype</a></td></tr>
                                     <tr><td><span class="req-id">R-007</span></td><td>Analysis-ready data</td><td>Store records in structured fields suitable for querying and dataframes</td><td>Database / query example</td></tr>
-                                    <tr><td><span class="req-id">R-008</span></td><td>Collection completeness</td><td>Record collection status and failures</td><td>Logs / monitoring evidence</td></tr>
+                                    <tr><td><span class="req-id">R-008</span></td><td>Not implemented</td><td>Deferred: low value relative to effort at project close. The worker logs failed polls and retries, but nothing is stored</td><td>None</td></tr>
                                 </tbody>
                             </table>
                         </div>
 
                         <div class="coverage-callout">
-                            <div><strong>6 / 8</strong><span>requirements currently have an implementation mapping</span></div>
-                            <p><b>R-004</b> and <b>R-006</b> remain open in the delivery log. Mapping an existing capability is not the same as verification: the RTM still records every requirement as unverified and unvalidated.</p>
+                            <div><strong>7 / 8</strong><span>requirements have an implementation mapping</span></div>
+                            <p><b>R-004</b> and <b>R-006</b> were delivered after the initial review. <b>R-008</b> was deferred: recording each collection cycle would need changes to the database and the collector, and with the project closing after 15 days of data, the effort outweighs the benefit. Gaps in collection cannot currently be told apart from quiet periods, so this is the first item to revisit if the project reopens.</p>
                         </div>
 
                         <div class="artifact-download">
